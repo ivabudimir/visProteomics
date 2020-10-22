@@ -1,0 +1,11 @@
+---
+title: "Visualize Venn"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualize Venn}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")

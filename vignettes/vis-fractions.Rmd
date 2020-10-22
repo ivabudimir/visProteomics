@@ -1,0 +1,13 @@
+---
+title: "Visualize fractions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualize fractions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
