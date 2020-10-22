@@ -24,6 +24,9 @@ devtools::install_github("ivabudimir/visProteomics")
 
 ## Usage
 
+Please check
+[visProteomics](https://ivabudimir.github.io/visProteomics/) website.
+
 ## License
 
 visProteomics is open source software, licensed under
