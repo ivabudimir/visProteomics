@@ -4,7 +4,7 @@
 #'can additionally be colored by the other column of given data frame.
 #'
 #'@param data Data frame with
-#'@param protein_column A column
+#'@param protein_column Column used to identify the proteins. Default value is 'Accession'.
 #'@param fraction_column Column used to identify the fraction number. Default value is 'Fraction_Number'.
 #'@param color_column Column used to color the points of scatter plot. If it is missing, the plot will be in black.
 #'@param list_of_proteins List of proteins we want to plot. In case we want to plot only a subset of all proteins. If it is missing,
@@ -24,7 +24,7 @@
 #'
 #'
 #'@export
-fracPlot <- function(data, protein_column, fraction_column="Fraction_Number", color_column, list_of_proteins, fraction_position="x", mark_size=2, mark_shape=18, protein_labels_size, fraction_labels_size, protein_name="Protein", fraction_name="Fraction number", color_name=color_column){
+fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction_Number", color_column, list_of_proteins, fraction_position="x", mark_size=2, mark_shape=18, protein_labels_size, fraction_labels_size, protein_name="Protein", fraction_name="Fraction number", color_name=color_column){
   if(!inherits(data, "data.frame")){
     stop("'data' must be data frame")
   }

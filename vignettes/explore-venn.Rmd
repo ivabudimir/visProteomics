@@ -1,11 +1,13 @@
 ---
-title: "Visualize Venn"
+title: "Explore Venn diagram"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visualize Venn}
+  %\VignetteIndexEntry{Explore Venn diagram}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+

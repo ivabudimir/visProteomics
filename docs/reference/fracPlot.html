@@ -96,13 +96,13 @@ can additionally be colored by the other column of given data frame." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
+    </li>
+    <li>
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
       <a href="../articles/vis-fractions.html">Visualize fractions</a>
-    </li>
-    <li>
-      <a href="../articles/vis-venn.html">Visualize Venn</a>
     </li>
   </ul>
 </li>
@@ -134,7 +134,7 @@ can additionally be colored by the other column of given data frame.</p>
 
     <pre class="usage"><span class='fu'>fracPlot</span><span class='op'>(</span>
   <span class='va'>data</span>,
-  <span class='va'>protein_column</span>,
+  protein_column <span class='op'>=</span> <span class='st'>"Accession"</span>,
   fraction_column <span class='op'>=</span> <span class='st'>"Fraction_Number"</span>,
   <span class='va'>color_column</span>,
   <span class='va'>list_of_proteins</span>,
@@ -157,7 +157,7 @@ can additionally be colored by the other column of given data frame.</p>
     </tr>
     <tr>
       <th>protein_column</th>
-      <td><p>A column</p></td>
+      <td><p>Column used to identify the proteins. Default value is 'Accession'.</p></td>
     </tr>
     <tr>
       <th>fraction_column</th>

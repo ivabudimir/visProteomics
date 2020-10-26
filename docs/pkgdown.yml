@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  explore-venn: explore-venn.html
   merge-fractions: merge-fractions.html
   vis-fractions: vis-fractions.html
-  vis-venn: vis-venn.html
-last_built: 2020-10-22T01:11Z
+last_built: 2020-10-26T00:58Z
 

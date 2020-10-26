@@ -9,8 +9,9 @@ Description: Tools for exploration and visualization of proteomics data sets obt
   for plotting the fractionized samples and functions which create descriptive data frames.
 Depends: R (>= 3.2)
 Imports: ggplot2, viridis
-Suggests: eulerr
+Suggests: eulerr, knitr, rmarkdown
 License: GPL-3
 LazyData: true
+VignetteBuilder: knitr, rmarkdown
 Encoding: UTF-8
 RoxygenNote: 7.1.1.9000

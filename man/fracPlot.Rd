@@ -6,7 +6,7 @@
 \usage{
 fracPlot(
   data,
-  protein_column,
+  protein_column = "Accession",
   fraction_column = "Fraction_Number",
   color_column,
   list_of_proteins,
@@ -23,7 +23,7 @@ fracPlot(
 \arguments{
 \item{data}{Data frame with}
 
-\item{protein_column}{A column}
+\item{protein_column}{Column used to identify the proteins. Default value is 'Accession'.}
 
 \item{fraction_column}{Column used to identify the fraction number. Default value is 'Fraction_Number'.}
 

@@ -1,2 +1,7 @@
 ^visProteomics\.Rproj$
 ^\.Rproj\.user$
+^README\.Rmd$
+^LICENSE$
+^docs$
+^Meta$
+^doc$
