@@ -21,6 +21,8 @@ Venn/Euler diagrams are widely used for data summarization and there are many pl
 devtools::install_github("ivabudimir/visProteomics")
 ```
 
+For installation of vignettes together with the package, add "build_vignettes=TRUE".
+
 ## Usage
 
 Please check [visProteomics](https://ivabudimir.github.io/visProteomics/) website.

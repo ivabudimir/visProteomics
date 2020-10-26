@@ -22,6 +22,9 @@ generic function can be used for any data set.
 devtools::install_github("ivabudimir/visProteomics")
 ```
 
+For installation of vignettes together with the package, add
+“build\_vignettes=TRUE”.
+
 ## Usage
 
 Please check
