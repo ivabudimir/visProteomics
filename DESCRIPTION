@@ -7,7 +7,7 @@ Authors@R: c(person("Iva", "Budimir", email = "iva.budimir.os@gmail.com", role =
 Description: Tools for exploration and visualization of proteomics data sets obtained with the process of fractionized sampling. 
   The main purpose of the package is to compare proteins detected in different fractions. To achieve this, package provides functions 
   for plotting the fractionized samples and functions which create descriptive data frames.
-Depends: R (>= 3.2)
+Depends: R (>= 3.5.0)
 Imports: ggplot2, viridis
 Suggests: eulerr, knitr, rmarkdown
 License: GPL-3
