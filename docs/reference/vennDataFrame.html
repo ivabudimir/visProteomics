@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,13 +95,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
-    </li>
-    <li>
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
       <a href="../articles/vis-fractions.html">Visualize fractions</a>
+    </li>
+    <li>
+      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
     </li>
   </ul>
 </li>
@@ -143,43 +143,43 @@
     <tr>
       <th>sets</th>
       <td><p>A list of sets. Sets must be vectors or data frames. If they are given as data frames,
-an argument 'by' must be specify.</p></td>
+an argument "by" must be specify.</p></td>
     </tr>
     <tr>
       <th>by</th>
       <td><p>The name of elements in Venn diagram. If sets are data frames, it specifies a column used to
-construct Venn regions. Default is "element".</p></td>
+construct Venn regions. Default value is "element".</p></td>
     </tr>
     <tr>
       <th>columns_to_keep</th>
-      <td><p>Defines which columns of data frames to keep in the result data frame. If 'NULL',
-only 'by' column is kept. If "all", all columns are kept. Default is 'NULL'.</p></td>
+      <td><p>Defines which columns of data frames to keep in the result data frame. If NULL,
+only "by" column is kept. If "all", all columns are kept. Defaults to NULL.</p></td>
     </tr>
     <tr>
       <th>only_counts</th>
-      <td><p>If 'TRUE', instead of data frame function returns only number of elements in each Venn region.
-Default is 'FALSE'.</p></td>
+      <td><p>If TRUE, instead of data frame function returns only number of elements in each Venn region.
+Defaults to FALSE.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of all elements from Venn regions. Column named with 'by' argument lists all elements from
+    <p>A data frame of all elements from Venn regions. Column named with "by" argument lists all elements from
 union of all sets. Column "venn_region" is a corresponding disjoint Venn region to which the element belongs.
-Intersections are described with '&amp;' character between sets' names. Additional columns are defined with
-'column_to_keep' argument. If argument 'only_counts' is TRUE, instead of data frame, the function returns a
+Intersections are described with "&amp;" character between sets' names. Additional columns are defined with
+"column_to_keep" argument. If argument "only_counts" is TRUE, instead of data frame, the function returns a
 elements in each Venn region.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function gives a detailed explanation of each Venn diagram region. Sets can be given as list
-of vectors or as list of data frames. In case of data frames, the column 'by' defines elements of Venn
+of vectors or as list of data frames. In case of data frames, the column "by" defines elements of Venn
 diagram. The result is a data frame with all elements listed in rows and a column "venn_region" specifying the
 corresponding Venn region for each element.
 The additional columns of given data frames can be used to further describe each element of Venn regions,
-as specified by 'columns_to_keep'. In case the specified column for an element has the same value in all data frames,
+as specified by "columns_to_keep". In case the specified column for an element has the same value in all data frames,
 a unique value will be returned. Otherwise, all values are returned. <br />
 If instead of detailed description, we wish to know only number of elements in each Venn diagram region,
-we should set argument 'only_counts' to 'TRUE'.</p>
+we should set argument "only_counts" to TRUE.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

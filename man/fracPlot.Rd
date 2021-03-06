@@ -23,35 +23,35 @@ fracPlot(
 \arguments{
 \item{data}{Data frame with}
 
-\item{protein_column}{Column used to identify the proteins. Default value is 'Accession'.}
+\item{protein_column}{Column used to identify the proteins. Default value is "Accession".}
 
-\item{fraction_column}{Column used to identify the fraction number. Default value is 'Fraction_Number'.}
+\item{fraction_column}{Column used to identify the fraction number. Default value is "Fraction_Number".}
 
 \item{color_column}{Column used to color the points of scatter plot. If it is missing, the plot will be in black.}
 
 \item{list_of_proteins}{List of proteins we want to plot. In case we want to plot only a subset of all proteins. If it is missing,
-all proteins in 'data' are plotted.}
+all proteins in "data" are plotted.}
 
-\item{fraction_position}{Orientation of the plot. For 'x', fractions are plotted on x-axis. For 'y', fractions are plotted on y-axis.
-Deafult is 'x'.}
+\item{fraction_position}{Orientation of the plot. For "x", fractions are plotted on x-axis. For "y", fractions are plotted on y-axis.
+Deafult is "x".}
 
-\item{mark_size}{Size of point. Passed to 'ggplot2'. Default is 2.}
+\item{mark_size}{Size of point. Passed to "ggplot2". Defaults to 2.}
 
-\item{mark_shape}{Shape of points. Passed to 'ggplot2'. Default is 18, a diamond shape.}
+\item{mark_shape}{Shape of points. Passed to "ggplot2". Defaults to 18, a diamond shape.}
 
 \item{protein_labels_size}{Size of axis labels for proteins. If missing, it is set automatically.}
 
 \item{fraction_labels_size}{Size of axis labels for fractions. If missing, it is set automatically.}
 
-\item{protein_name}{Name of axis. Default is "Protein".}
+\item{protein_name}{Name of axis. Default values is "Protein".}
 
-\item{fraction_name}{Name of axis. Default is "Fraction number"}
+\item{fraction_name}{Name of axis. Default values is "Fraction number"}
 
-\item{color_name}{Name of color legend. By default, it is equal to 'color_column'}
+\item{color_name}{Name of color legend. By default, it is equal to "color_column"}
 }
 \value{
-Returns 'ggplot2' object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-colored by 'color_column' and the color scale is shown in the legend. The plot can easily be saved using 'ggsave' function.
+Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
+colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.
 }
 \description{
 Scatter plot based on a data frame. Data frame gives the list of proteins found in fractions. Points

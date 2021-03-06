@@ -4,39 +4,39 @@
 #'can additionally be colored by the other column of given data frame.
 #'
 #'@param data Data frame with
-#'@param protein_column Column used to identify the proteins. Default value is 'Accession'.
-#'@param fraction_column Column used to identify the fraction number. Default value is 'Fraction_Number'.
+#'@param protein_column Column used to identify the proteins. Default value is "Accession".
+#'@param fraction_column Column used to identify the fraction number. Default value is "Fraction_Number".
 #'@param color_column Column used to color the points of scatter plot. If it is missing, the plot will be in black.
 #'@param list_of_proteins List of proteins we want to plot. In case we want to plot only a subset of all proteins. If it is missing,
-#'all proteins in 'data' are plotted.
-#'@param fraction_position Orientation of the plot. For 'x', fractions are plotted on x-axis. For 'y', fractions are plotted on y-axis.
-#'Deafult is 'x'.
-#'@param mark_size Size of point. Passed to 'ggplot2'. Default is 2.
-#'@param mark_shape Shape of points. Passed to 'ggplot2'. Default is 18, a diamond shape.
+#'all proteins in "data" are plotted.
+#'@param fraction_position Orientation of the plot. For "x", fractions are plotted on x-axis. For "y", fractions are plotted on y-axis.
+#'Deafult is "x".
+#'@param mark_size Size of point. Passed to "ggplot2". Defaults to 2.
+#'@param mark_shape Shape of points. Passed to "ggplot2". Defaults to 18, a diamond shape.
 #'@param protein_labels_size Size of axis labels for proteins. If missing, it is set automatically.
 #'@param fraction_labels_size Size of axis labels for fractions. If missing, it is set automatically.
-#'@param protein_name Name of axis. Default is "Protein".
-#'@param fraction_name Name of axis. Default is "Fraction number"
-#'@param color_name Name of color legend. By default, it is equal to 'color_column'
+#'@param protein_name Name of axis. Default values is "Protein".
+#'@param fraction_name Name of axis. Default values is "Fraction number"
+#'@param color_name Name of color legend. By default, it is equal to "color_column"
 #'
-#'@returns Returns 'ggplot2' object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-#'colored by 'color_column' and the color scale is shown in the legend. The plot can easily be saved using 'ggsave' function.
+#'@returns Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
+#'colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.
 #'
 #'
 #'@export
 fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction_Number", color_column, list_of_proteins, fraction_position="x", mark_size=2, mark_shape=18, protein_labels_size, fraction_labels_size, protein_name="Protein", fraction_name="Fraction number", color_name=color_column){
   if(!inherits(data, "data.frame")){
-    stop("'data' must be data frame")
+    stop('"data" must be data frame')
   }
   if(any(!c(protein_column, fraction_column) %in% colnames(data))){
     stop("Wrong column names.")
   }
   if(!missing(color_column))
     if(!(color_column %in% colnames(data))){
-      stop("Wrong 'color_column' name.")
+      stop('Wrong "color_column" name.')
     }
     if(!is.numeric(data[,color_column])){
-      stop("'color_column' must be numeric.")
+      stop('"color_column" must be numeric.')
     }
   if(!fraction_position %in% c('x', 'y')){
     stop("Wrong position argument.")

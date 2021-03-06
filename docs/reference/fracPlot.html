@@ -81,7 +81,7 @@ can additionally be colored by the other column of given data frame." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -96,13 +96,13 @@ can additionally be colored by the other column of given data frame." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
-    </li>
-    <li>
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
       <a href="../articles/vis-fractions.html">Visualize fractions</a>
+    </li>
+    <li>
+      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
     </li>
   </ul>
 </li>
@@ -157,11 +157,11 @@ can additionally be colored by the other column of given data frame.</p>
     </tr>
     <tr>
       <th>protein_column</th>
-      <td><p>Column used to identify the proteins. Default value is 'Accession'.</p></td>
+      <td><p>Column used to identify the proteins. Default value is "Accession".</p></td>
     </tr>
     <tr>
       <th>fraction_column</th>
-      <td><p>Column used to identify the fraction number. Default value is 'Fraction_Number'.</p></td>
+      <td><p>Column used to identify the fraction number. Default value is "Fraction_Number".</p></td>
     </tr>
     <tr>
       <th>color_column</th>
@@ -170,20 +170,20 @@ can additionally be colored by the other column of given data frame.</p>
     <tr>
       <th>list_of_proteins</th>
       <td><p>List of proteins we want to plot. In case we want to plot only a subset of all proteins. If it is missing,
-all proteins in 'data' are plotted.</p></td>
+all proteins in "data" are plotted.</p></td>
     </tr>
     <tr>
       <th>fraction_position</th>
-      <td><p>Orientation of the plot. For 'x', fractions are plotted on x-axis. For 'y', fractions are plotted on y-axis.
-Deafult is 'x'.</p></td>
+      <td><p>Orientation of the plot. For "x", fractions are plotted on x-axis. For "y", fractions are plotted on y-axis.
+Deafult is "x".</p></td>
     </tr>
     <tr>
       <th>mark_size</th>
-      <td><p>Size of point. Passed to 'ggplot2'. Default is 2.</p></td>
+      <td><p>Size of point. Passed to "ggplot2". Defaults to 2.</p></td>
     </tr>
     <tr>
       <th>mark_shape</th>
-      <td><p>Shape of points. Passed to 'ggplot2'. Default is 18, a diamond shape.</p></td>
+      <td><p>Shape of points. Passed to "ggplot2". Defaults to 18, a diamond shape.</p></td>
     </tr>
     <tr>
       <th>protein_labels_size</th>
@@ -195,22 +195,22 @@ Deafult is 'x'.</p></td>
     </tr>
     <tr>
       <th>protein_name</th>
-      <td><p>Name of axis. Default is "Protein".</p></td>
+      <td><p>Name of axis. Default values is "Protein".</p></td>
     </tr>
     <tr>
       <th>fraction_name</th>
-      <td><p>Name of axis. Default is "Fraction number"</p></td>
+      <td><p>Name of axis. Default values is "Fraction number"</p></td>
     </tr>
     <tr>
       <th>color_name</th>
-      <td><p>Name of color legend. By default, it is equal to 'color_column'</p></td>
+      <td><p>Name of color legend. By default, it is equal to "color_column"</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns 'ggplot2' object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-colored by 'color_column' and the color scale is shown in the legend. The plot can easily be saved using 'ggsave' function.</p>
+    <p>Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
+colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

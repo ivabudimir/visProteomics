@@ -9,34 +9,34 @@ fracTable(
   fraction_column = "Fraction_Number",
   column_to_bin,
   finite_bin_limits,
-  include_minInf = FALSE,
+  include_negInf = FALSE,
   include_Inf = FALSE
 )
 }
 \arguments{
-\item{data}{Data frame with columns 'column_to_bin' and 'fraction_column'. Every row is considered to be
+\item{data}{Data frame with columns "column_to_bin" and "fraction_column". Every row is considered to be
 an unique element used for binning.}
 
-\item{fraction_column}{Column used to identify the fraction number. Default value is 'Fraction_Number'.}
+\item{fraction_column}{Column used to identify the fraction number. Default value is "Fraction_Number".}
 
-\item{column_to_bin}{Column whose values are used for binning.S}
+\item{column_to_bin}{Column whose values are used for binning.}
 
-\item{finite_bin_limits}{Finite delimiters between bin}
+\item{finite_bin_limits}{Finite delimiters between bins.}
 
-\item{include_minInf}{Include minus infinity as the lower boundary of the first bin. Default is 'FALSE'.}
+\item{include_negInf}{Include negative infinity as the lower boundary of the first bin. Defaults to FALSE.}
 
-\item{include_Inf}{Include infinity as the upper boundary of the last bin. Default is 'FALSE'.}
+\item{include_Inf}{Include infinity as the upper boundary of the last bin. Defaults to FALSE.}
 }
 \value{
-A data frame with fractions as rows and bins as columns. Cells count number of elements in fraction
-which 'column_to_bin' is in the corresponding bin's range. Additional columns are 'NA_values', 'total',
-'min' and 'max'. The last row reports total number of elements per bin.
+A data frame with fractions as rows and bins as columns. Cells report a number of elements in a fraction
+with values in a bin's range. Additional columns are "NA_values", "total",
+"min" and "max". The last row reports total number of elements per bin.
 }
 \description{
 Counts number of elements in each bin based on given attribute for every fraction.
 }
 \details{
-For a given 'finite_bin_limits' it creates bins considering also the arguments 'include_minInf' and 'include_Inf'.
+For a given "finite_bin_limits" it creates bins considering also the arguments "include_negInf" and "include_Inf".
 For every fraction, it counts number of non-NA elements which fall into each bin. Lower boundary of a bin is included and
-upper boundary is excluded. If 'NA' values are present, their number per fraction is reported.
+upper boundary is excluded. If NA values are present, their number per fraction is reported.
 }

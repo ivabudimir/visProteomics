@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,13 +95,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
-    </li>
-    <li>
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
       <a href="../articles/vis-fractions.html">Visualize fractions</a>
+    </li>
+    <li>
+      <a href="../articles/explore-venn.html">Explore Venn diagram</a>
     </li>
   </ul>
 </li>
@@ -135,7 +135,7 @@
   fraction_column <span class='op'>=</span> <span class='st'>"Fraction_Number"</span>,
   <span class='va'>column_to_bin</span>,
   <span class='va'>finite_bin_limits</span>,
-  include_minInf <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  include_negInf <span class='op'>=</span> <span class='cn'>FALSE</span>,
   include_Inf <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -144,41 +144,41 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data frame with columns 'column_to_bin' and 'fraction_column'. Every row is considered to be
+      <td><p>Data frame with columns "column_to_bin" and "fraction_column". Every row is considered to be
 an unique element used for binning.</p></td>
     </tr>
     <tr>
       <th>fraction_column</th>
-      <td><p>Column used to identify the fraction number. Default value is 'Fraction_Number'.</p></td>
+      <td><p>Column used to identify the fraction number. Default value is "Fraction_Number".</p></td>
     </tr>
     <tr>
       <th>column_to_bin</th>
-      <td><p>Column whose values are used for binning.S</p></td>
+      <td><p>Column whose values are used for binning.</p></td>
     </tr>
     <tr>
       <th>finite_bin_limits</th>
-      <td><p>Finite delimiters between bin</p></td>
+      <td><p>Finite delimiters between bins.</p></td>
     </tr>
     <tr>
-      <th>include_minInf</th>
-      <td><p>Include minus infinity as the lower boundary of the first bin. Default is 'FALSE'.</p></td>
+      <th>include_negInf</th>
+      <td><p>Include negative infinity as the lower boundary of the first bin. Defaults to FALSE.</p></td>
     </tr>
     <tr>
       <th>include_Inf</th>
-      <td><p>Include infinity as the upper boundary of the last bin. Default is 'FALSE'.</p></td>
+      <td><p>Include infinity as the upper boundary of the last bin. Defaults to FALSE.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with fractions as rows and bins as columns. Cells count number of elements in fraction
-which 'column_to_bin' is in the corresponding bin's range. Additional columns are 'NA_values', 'total',
-'min' and 'max'. The last row reports total number of elements per bin.</p>
+    <p>A data frame with fractions as rows and bins as columns. Cells report a number of elements in a fraction
+with values in a bin's range. Additional columns are "NA_values", "total",
+"min" and "max". The last row reports total number of elements per bin.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For a given 'finite_bin_limits' it creates bins considering also the arguments 'include_minInf' and 'include_Inf'.
+    <p>For a given "finite_bin_limits" it creates bins considering also the arguments "include_negInf" and "include_Inf".
 For every fraction, it counts number of non-NA elements which fall into each bin. Lower boundary of a bin is included and
-upper boundary is excluded. If 'NA' values are present, their number per fraction is reported.</p>
+upper boundary is excluded. If NA values are present, their number per fraction is reported.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

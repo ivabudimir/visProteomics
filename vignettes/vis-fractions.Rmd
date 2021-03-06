@@ -11,3 +11,13 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+
+See [vignette-1](merge-fractions.html)
+
+```{r}
+data("data_total", package="visProteomics")
+data("data_top20", package="visProteomics")
+```
+
+
+

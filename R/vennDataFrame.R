@@ -2,34 +2,34 @@
 #'
 #' @description Returns a data frame with description of each Venn diagram region.
 #' @details This function gives a detailed explanation of each Venn diagram region. Sets can be given as list
-#' of vectors or as list of data frames. In case of data frames, the column 'by' defines elements of Venn
+#' of vectors or as list of data frames. In case of data frames, the column "by" defines elements of Venn
 #' diagram. The result is a data frame with all elements listed in rows and a column "venn_region" specifying the
 #' corresponding Venn region for each element.
 #' The additional columns of given data frames can be used to further describe each element of Venn regions,
-#' as specified by 'columns_to_keep'. In case the specified column for an element has the same value in all data frames,
+#' as specified by "columns_to_keep". In case the specified column for an element has the same value in all data frames,
 #' a unique value will be returned. Otherwise, all values are returned. \cr
 #' If instead of detailed description, we wish to know only number of elements in each Venn diagram region,
-#' we should set argument 'only_counts' to 'TRUE'.
+#' we should set argument "only_counts" to TRUE.
 #'
 #' @param sets A list of sets. Sets must be vectors or data frames. If they are given as data frames,
-#' an argument 'by' must be specify.
+#' an argument "by" must be specify.
 #' @param by The name of elements in Venn diagram. If sets are data frames, it specifies a column used to
-#' construct Venn regions. Default is "element".
-#' @param columns_to_keep Defines which columns of data frames to keep in the result data frame. If 'NULL',
-#' only 'by' column is kept. If "all", all columns are kept. Default is 'NULL'.
-#' @param only_counts If 'TRUE', instead of data frame function returns only number of elements in each Venn region.
-#' Default is 'FALSE'.
+#' construct Venn regions. Default value is "element".
+#' @param columns_to_keep Defines which columns of data frames to keep in the result data frame. If NULL,
+#' only "by" column is kept. If "all", all columns are kept. Defaults to NULL.
+#' @param only_counts If TRUE, instead of data frame function returns only number of elements in each Venn region.
+#' Defaults to FALSE.
 #'
-#' @return A data frame of all elements from Venn regions. Column named with 'by' argument lists all elements from
+#' @return A data frame of all elements from Venn regions. Column named with "by" argument lists all elements from
 #' union of all sets. Column "venn_region" is a corresponding disjoint Venn region to which the element belongs.
-#' Intersections are described with '&' character between sets' names. Additional columns are defined with
-#' 'column_to_keep' argument. If argument 'only_counts' is TRUE, instead of data frame, the function returns a
+#' Intersections are described with "&" character between sets' names. Additional columns are defined with
+#' "column_to_keep" argument. If argument "only_counts" is TRUE, instead of data frame, the function returns a
 #' elements in each Venn region.
 #'
 #' @export
 vennDataFrame <- function(sets, by="element", columns_to_keep=NULL, only_counts=FALSE){
   if(!inherits(sets, "list")){
-    stop("Parameter 'sets' must be list.")
+    stop('Parameter "sets" must be list.')
   }
   n_sets <- length(sets)
 
@@ -56,7 +56,7 @@ vennDataFrame <- function(sets, by="element", columns_to_keep=NULL, only_counts=
       sets <- lapply(sets, function(x) x[,by])
       is_dataframe=TRUE
     }else{
-      stop("All data frames must have 'by' column.")
+      stop('All data frames must have "by" column.')
     }
   }else{
     stop("All sets must be data frames or all sets must be vectors.")
@@ -88,7 +88,7 @@ vennDataFrame <- function(sets, by="element", columns_to_keep=NULL, only_counts=
     columns_all <- columns_all[columns_all!=by]
     columns_to_keep <- intersect(columns_to_keep, columns_all)
     if(length(columns_to_keep)==0){
-      warning("'columns_to_keep' are not columns of given data frames.")
+      warning('"columns_to_keep" are not columns of the given data frames.')
       return(venn_df)
     }
     # add columns to venn_df

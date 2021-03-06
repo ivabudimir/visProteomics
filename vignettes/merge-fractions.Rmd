@@ -18,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>"
 
 Functions from this package are intended for summarizing and visualizing fractions of the analyzed fractionated sample.
 To use the function we need one tidy data frame with all proteins from all fractions listed in rows and with two required columns, one giving the protein ID and another number of the fraction in which the protein is detected. Additional columns with further protein description can be added and used for summarization.
-In this vignette, we demonstrate how to create a tidy data frame of proteins step by step, with easily understandable R function calls. There are other, possibly more efficient approaches, however, we wanted the code to be easy to understand and customize even to R beginners.
+In this vignette, we demonstrate how to create a tidy data frame of proteins step by step, with easily understandable R function calls. There are other, possibly more efficient approaches, however, we wanted the code to be easy to understand and customise even for R beginners.
 
 ## Uploading and merging data
 

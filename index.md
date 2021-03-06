@@ -27,8 +27,7 @@ For installation of vignettes together with the package, add
 
 ## Usage
 
-Please check
-[visProteomics](https://ivabudimir.github.io/visProteomics/) website.
+...
 
 ## License
 
