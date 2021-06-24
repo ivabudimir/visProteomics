@@ -27,6 +27,7 @@ For installation of vignettes together with the package, add "build_vignettes=TR
 
 Please check [visProteomics](https://ivabudimir.github.io/visProteomics/) website.
 
+Alternatively, read vignettes *merge-fractions* and *vis-fractions* for the exploration and visualization of a fractionated proteomic sample. For the tabular Venn function, read *explore-venn* vignette.
 
 ## License
 

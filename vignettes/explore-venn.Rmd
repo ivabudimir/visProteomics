@@ -1,6 +1,7 @@
 ---
 title: "Explore Venn diagram"
 output: rmarkdown::html_vignette
+bibliography: explore-venn.bib
 vignette: >
   %\VignetteIndexEntry{Explore Venn diagram}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,3 +12,76 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+Venn/Euler diagrams are widely used for the visual representation of logical relationships between sets. For example, in proteomics, we may want to compare sets of proteins detected in different samples or in different fractions of the same fractionated sample.
+
+In visual representation of a diagram, there is difference between Venn and Euler diagram. While Venn diagram shows all possible logical relationships, Euler diagram shows only non-empty regions of a diagram and the area of a region is often proportional to the number of elements. Having the size of regions approximately proportional to the number of elements inside it is not a trivial task which makes Euler diagram more complicated to plot than the Venn diagram. *eulerr* [@eulerr] is an R package which plots nice Euler and Venn diagrams. The basic functions of *eulerr* are also available as an app hosted at [eulerr.co](http://eulerr.co/).
+
+Besides *eulerr*, there are many other other options available for the plotting of Venn diagram. However, Venn/Euler diagram shows only the number of elements inside its regions. *visProteomics* defines a complementary tabular function *[vennDataFrame](../reference/vennDataFrame.html)* which lists the elements found in different regions of Venn diagram. Besides the list of elements, the resulting data frame can also include different attributes of the elements.
+First, for *vennDataFrame* function to be visible, the package has to be loaded.
+
+```{r}
+library(visProteomics)
+```
+
+
+# Simple example of Venn/Euler diagram
+
+We define three arbitrary vectors/sets of proteins and plot their Venn and Euler diagram using the *eulerr* package. 
+
+```{r}
+proteins_A <- c("B4DPP6", "B7WNR0", "E5RH81", "P00915", "P01857", "P02768", "Q56G89", "Q5EFE6")
+proteins_B <- c("B7WNR0", "E5RHP7", "F6KPG5", "H6VRG0", "P00915", "P13646", "Q56G89", "Q6P5S8")
+proteins_C <- c("B4DPP6", "B7WNR0", "E5RHP7", "H6VRG0", "P02768", "P13646", "P31944", "Q56G89")
+plot(eulerr::venn(list(A=proteins_A, B=proteins_B, C=proteins_C)), quantities=TRUE)
+plot(eulerr::euler(list(A=proteins_A, B=proteins_B, C=proteins_C)), quantities=TRUE)
+```
+
+
+From diagrams we read that, for example, $2$ proteins are shared by all three sets and $1$ protein is present only in the set "C". However, we can't see which proteins are elements of different Venn regions. To easily view the content of Venn regions, we call *vennDataFrame* function where "sets" is the named list of sets. Each set has to be given as a vector of elements instead of a set.
+
+```{r}
+vennDataFrame(sets=list(A=proteins_A, B=proteins_B, C=proteins_C))
+```
+
+The resulting data frame shows all elements found in different Venn regions. The Venn regions are named using the "&" symbol for intersection of sets. Now we can easily read that proteins "B7WNR0" and "Q56G89" are present in all three sets and that protein "P31944" is present only in set "C".
+
+If instead of the whole list of proteins, we are only interested in their count we set "only_counts" parameter to TRUE. In this case only the numerical values visible in Venn diagram are reported.
+
+```{r}
+vennDataFrame(list(A=proteins_A, B=proteins_B, C=proteins_C), only_counts=TRUE)
+```
+
+
+
+# Adding description of elements
+
+Instead of the vectors, sets can also be given as data frames. This allows for an additional description of elements. For example, using the "data_top20" included in *visProteomics* package, we get the list of proteins found in different fractions of a fractionated sample. Now we can define three different sets taking only proteins found in the first, second and third fraction. We can use *vennDataFrame* function to compare the three sets. All three data frames have to include the column with element IDs and the name of the column has to be provided as an argument to "by" parameter. If besides the element IDs, we want to include additional information about the elements the columns with additional information have to be given to "columns_to_keep" parameter.
+
+```{r}
+data("data_top20", package="visProteomics")
+data_1stFrac <- data_top20[data_top20$Fraction_Number==1,]
+data_2ndFrac <- data_top20[data_top20$Fraction_Number==2,]
+data_3rdFrac <- data_top20[data_top20$Fraction_Number==3,]
+vennDataFrame(list(first=data_1stFrac, second=data_2ndFrac, third=data_3rdFrac), by="Accession", columns_to_keep=c("Sum_Coverage", "pI"))
+```
+
+The resulting data frame contains protein IDs in "Accession" column and the respective Venn region in "venn_region" column. Additionally, "Sum_Coverage" and "pI" columns are included. If the value of a certain attribute for the same protein differs among the sets, all values are reported. For example, protein "P01859" has "Sum_Coverage" equal to $13.19$ in first and second fraction while "Sum_Coverage" of "P31944" differs between the fractions.
+
+
+# Comparison of multiple data sets
+
+While Venn diagrams are usually used for up to three sets, the *eulerr* package allows the use of up to five sets. We define additional arbitrary set of proteins "D".
+
+```{r}
+proteins_D = c("B4DI57", "B4DPP6", "E5RH81", "P01857", "P02768", "P31944", "Q14118")
+plot(eulerr::euler(list(A=proteins_A, B=proteins_B, C=proteins_C, D=proteins_D), shape="ellipse"), quantities=TRUE)
+```
+
+*vennDataFrame* function doesn't have the maximum allowed number of sets. If the "sets" parameter is unnamed list then the default set names are used: A, B, C...
+
+```{r}
+vennDataFrame(list(proteins_A, proteins_B, proteins_C, proteins_D))
+```
+
+
+## References

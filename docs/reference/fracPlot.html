@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Scatter plot of proteins in fractions — fracPlot" />
 <meta property="og:description" content="Scatter plot based on a data frame. Data frame gives the list of proteins found in fractions. Points
-can additionally be colored by the other column of given data frame." />
+can additionally be colored based on the values of one of the given columns." />
 
 
 
@@ -99,7 +99,7 @@ can additionally be colored by the other column of given data frame." />
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
-      <a href="../articles/vis-fractions.html">Visualize fractions</a>
+      <a href="../articles/vis-fractions.html">Visualize and explore fractions</a>
     </li>
     <li>
       <a href="../articles/explore-venn.html">Explore Venn diagram</a>
@@ -129,7 +129,7 @@ can additionally be colored by the other column of given data frame." />
 
     <div class="ref-description">
     <p>Scatter plot based on a data frame. Data frame gives the list of proteins found in fractions. Points
-can additionally be colored by the other column of given data frame.</p>
+can additionally be colored based on the values of one of the given columns.</p>
     </div>
 
     <pre class="usage"><span class='fu'>fracPlot</span><span class='op'>(</span>
@@ -145,7 +145,8 @@ can additionally be colored by the other column of given data frame.</p>
   <span class='va'>fraction_labels_size</span>,
   protein_name <span class='op'>=</span> <span class='st'>"Protein"</span>,
   fraction_name <span class='op'>=</span> <span class='st'>"Fraction number"</span>,
-  color_name <span class='op'>=</span> <span class='va'>color_column</span>
+  color_name <span class='op'>=</span> <span class='va'>color_column</span>,
+  order_proteins <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -153,7 +154,7 @@ can additionally be colored by the other column of given data frame.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>Data frame with</p></td>
+      <td><p>Data frame with all proteins from all fractions listed in rows and with two required columns, "protein_column" and "fraction_column".</p></td>
     </tr>
     <tr>
       <th>protein_column</th>
@@ -205,12 +206,18 @@ Deafult is "x".</p></td>
       <th>color_name</th>
       <td><p>Name of color legend. By default, it is equal to "color_column"</p></td>
     </tr>
+    <tr>
+      <th>order_proteins</th>
+      <td><p>Whether to preserve the given order of the proteins from the "list_of_proteins".
+If TRUE, proteins are ordered alphabetically based on the "protein_column".
+If FALSE, the order of the list is preserved. Defaults to TRUE.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.</p>
+colored based on the values of "color_column" with the color scale shown in the legend. The plot can easily be saved using "ggsave" function.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

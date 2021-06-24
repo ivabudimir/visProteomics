@@ -57,7 +57,7 @@
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
-      <a href="../articles/vis-fractions.html">Visualize fractions</a>
+      <a href="../articles/vis-fractions.html">Visualize and explore fractions</a>
     </li>
     <li>
       <a href="../articles/explore-venn.html">Explore Venn diagram</a>
@@ -88,12 +88,127 @@
 
     
     
-
+<p>Venn/Euler diagrams are widely used for the visual representation of logical relationships between sets. For example, in proteomics, we may want to compare sets of proteins detected in different samples or in different fractions of the same fractionated sample.</p>
+<p>In visual representation of a diagram, there is difference between Venn and Euler diagram. While Venn diagram shows all possible logical relationships, Euler diagram shows only non-empty regions of a diagram and the area of a region is often proportional to the number of elements. Having the size of regions approximately proportional to the number of elements inside it is not a trivial task which makes Euler diagram more complicated to plot than the Venn diagram. <em>eulerr</em> <span class="citation">(Larsson 2020)</span> is an R package which plots nice Euler and Venn diagrams. The basic functions of <em>eulerr</em> are also available as an app hosted at <a href="http://eulerr.co/">eulerr.co</a>.</p>
+<p>Besides <em>eulerr</em>, there are many other other options available for the plotting of Venn diagram. However, Venn/Euler diagram shows only the number of elements inside its regions. <em>visProteomics</em> defines a complementary tabular function <em><a href="../reference/vennDataFrame.html">vennDataFrame</a></em> which lists the elements found in different regions of Venn diagram. Besides the list of elements, the resulting data frame can also include different attributes of the elements. First, for <em>vennDataFrame</em> function to be visible, the package has to be loaded.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">visProteomics</span><span class="op">)</span></code></pre></div>
+<div id="simple-example-of-venneuler-diagram" class="section level1">
+<h1 class="hasAnchor">
+<a href="#simple-example-of-venneuler-diagram" class="anchor"></a>Simple example of Venn/Euler diagram</h1>
+<p>We define three arbitrary vectors/sets of proteins and plot their Venn and Euler diagram using the <em>eulerr</em> package.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">proteins_A</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DPP6"</span>, <span class="st">"B7WNR0"</span>, <span class="st">"E5RH81"</span>, <span class="st">"P00915"</span>, <span class="st">"P01857"</span>, <span class="st">"P02768"</span>, <span class="st">"Q56G89"</span>, <span class="st">"Q5EFE6"</span><span class="op">)</span>
+<span class="va">proteins_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B7WNR0"</span>, <span class="st">"E5RHP7"</span>, <span class="st">"F6KPG5"</span>, <span class="st">"H6VRG0"</span>, <span class="st">"P00915"</span>, <span class="st">"P13646"</span>, <span class="st">"Q56G89"</span>, <span class="st">"Q6P5S8"</span><span class="op">)</span>
+<span class="va">proteins_C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DPP6"</span>, <span class="st">"B7WNR0"</span>, <span class="st">"E5RHP7"</span>, <span class="st">"H6VRG0"</span>, <span class="st">"P02768"</span>, <span class="st">"P13646"</span>, <span class="st">"P31944"</span>, <span class="st">"Q56G89"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="fu">eulerr</span><span class="fu">::</span><span class="fu"><a href="https://jolars.github.io/eulerr/reference/venn.html">venn</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="va">proteins_A</span>, B<span class="op">=</span><span class="va">proteins_B</span>, C<span class="op">=</span><span class="va">proteins_C</span><span class="op">)</span><span class="op">)</span>, quantities<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="explore-venn_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="fu">eulerr</span><span class="fu">::</span><span class="fu"><a href="https://jolars.github.io/eulerr/reference/euler.html">euler</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="va">proteins_A</span>, B<span class="op">=</span><span class="va">proteins_B</span>, C<span class="op">=</span><span class="va">proteins_C</span><span class="op">)</span><span class="op">)</span>, quantities<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="explore-venn_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<p>From diagrams we read that, for example, <span class="math inline">\(2\)</span> proteins are shared by all three sets and <span class="math inline">\(1\)</span> protein is present only in the set “C”. However, we can’t see which proteins are elements of different Venn regions. To easily view the content of Venn regions, we call <em>vennDataFrame</em> function where “sets” is the named list of sets. Each set has to be given as a vector of elements instead of a set.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/vennDataFrame.html">vennDataFrame</a></span><span class="op">(</span>sets<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="va">proteins_A</span>, B<span class="op">=</span><span class="va">proteins_B</span>, C<span class="op">=</span><span class="va">proteins_C</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    element venn_region</span>
+<span class="co">#&gt; 1   E5RH81           A</span>
+<span class="co">#&gt; 2   P01857           A</span>
+<span class="co">#&gt; 3   Q5EFE6           A</span>
+<span class="co">#&gt; 4   F6KPG5           B</span>
+<span class="co">#&gt; 5   Q6P5S8           B</span>
+<span class="co">#&gt; 6   P31944           C</span>
+<span class="co">#&gt; 7   P00915         A&amp;B</span>
+<span class="co">#&gt; 8   B4DPP6         A&amp;C</span>
+<span class="co">#&gt; 9   P02768         A&amp;C</span>
+<span class="co">#&gt; 10  E5RHP7         B&amp;C</span>
+<span class="co">#&gt; 11  H6VRG0         B&amp;C</span>
+<span class="co">#&gt; 12  P13646         B&amp;C</span>
+<span class="co">#&gt; 13  B7WNR0       A&amp;B&amp;C</span>
+<span class="co">#&gt; 14  Q56G89       A&amp;B&amp;C</span></code></pre></div>
+<p>The resulting data frame shows all elements found in different Venn regions. The Venn regions are named using the “&amp;” symbol for intersection of sets. Now we can easily read that proteins “B7WNR0” and “Q56G89” are present in all three sets and that protein “P31944” is present only in set “C”.</p>
+<p>If instead of the whole list of proteins, we are only interested in their count we set “only_counts” parameter to TRUE. In this case only the numerical values visible in Venn diagram are reported.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/vennDataFrame.html">vennDataFrame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="va">proteins_A</span>, B<span class="op">=</span><span class="va">proteins_B</span>, C<span class="op">=</span><span class="va">proteins_C</span><span class="op">)</span>, only_counts<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     A     B     C   A&amp;B   A&amp;C   B&amp;C A&amp;B&amp;C </span>
+<span class="co">#&gt;     3     2     1     1     2     3     2</span></code></pre></div>
+</div>
+<div id="adding-description-of-elements" class="section level1">
+<h1 class="hasAnchor">
+<a href="#adding-description-of-elements" class="anchor"></a>Adding description of elements</h1>
+<p>Instead of the vectors, sets can also be given as data frames. This allows for an additional description of elements. For example, using the “data_top20” included in <em>visProteomics</em> package, we get the list of proteins found in different fractions of a fractionated sample. Now we can define three different sets taking only proteins found in the first, second and third fraction. We can use <em>vennDataFrame</em> function to compare the three sets. All three data frames have to include the column with element IDs and the name of the column has to be provided as an argument to “by” parameter. If besides the element IDs, we want to include additional information about the elements the columns with additional information have to be given to “columns_to_keep” parameter.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"data_top20"</span>, package<span class="op">=</span><span class="st">"visProteomics"</span><span class="op">)</span>
+<span class="va">data_1stFrac</span> <span class="op">&lt;-</span> <span class="va">data_top20</span><span class="op">[</span><span class="va">data_top20</span><span class="op">$</span><span class="va">Fraction_Number</span><span class="op">==</span><span class="fl">1</span>,<span class="op">]</span>
+<span class="va">data_2ndFrac</span> <span class="op">&lt;-</span> <span class="va">data_top20</span><span class="op">[</span><span class="va">data_top20</span><span class="op">$</span><span class="va">Fraction_Number</span><span class="op">==</span><span class="fl">2</span>,<span class="op">]</span>
+<span class="va">data_3rdFrac</span> <span class="op">&lt;-</span> <span class="va">data_top20</span><span class="op">[</span><span class="va">data_top20</span><span class="op">$</span><span class="va">Fraction_Number</span><span class="op">==</span><span class="fl">3</span>,<span class="op">]</span>
+<span class="fu"><a href="../reference/vennDataFrame.html">vennDataFrame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>first<span class="op">=</span><span class="va">data_1stFrac</span>, second<span class="op">=</span><span class="va">data_2ndFrac</span>, third<span class="op">=</span><span class="va">data_3rdFrac</span><span class="op">)</span>, by<span class="op">=</span><span class="st">"Accession"</span>, columns_to_keep<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sum_Coverage"</span>, <span class="st">"pI"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    Accession        venn_region                         Sum_Coverage   pI</span>
+<span class="co">#&gt; 1     Q53H26              first                                27.36 7.03</span>
+<span class="co">#&gt; 2     P00915              first                                35.63 7.12</span>
+<span class="co">#&gt; 3     P31151              first                                35.64 6.77</span>
+<span class="co">#&gt; 4     P02671              first                                 2.54 6.01</span>
+<span class="co">#&gt; 5     P01766              first                                21.67 6.57</span>
+<span class="co">#&gt; 6     P31025              first                                 12.5 5.58</span>
+<span class="co">#&gt; 7     B4DI57             second                                 6.48 7.21</span>
+<span class="co">#&gt; 8     P02652             second                                   21 6.62</span>
+<span class="co">#&gt; 9     P01024             second                                 1.02  6.4</span>
+<span class="co">#&gt; 10    P02649              third                                 6.31 5.73</span>
+<span class="co">#&gt; 11    P31944       first&amp;second              first=14.46;second=8.68 5.58</span>
+<span class="co">#&gt; 12    P01859       first&amp;second                                13.19 7.59</span>
+<span class="co">#&gt; 13    P0CG48       first&amp;second              first=38.1;second=24.96 7.66</span>
+<span class="co">#&gt; 14    P02647       second&amp;third              second=8.24;third=12.36 5.76</span>
+<span class="co">#&gt; 15    P59665       second&amp;third                                19.15 6.99</span>
+<span class="co">#&gt; 16    P02768 first&amp;second&amp;third first=22.99;second=20.69;third=17.24 6.28</span>
+<span class="co">#&gt; 17    P01857 first&amp;second&amp;third first=18.18;second=18.18;third=11.82 8.19</span>
+<span class="co">#&gt; 18    P01834 first&amp;second&amp;third first=65.09;second=32.08;third=32.08 5.87</span>
+<span class="co">#&gt; 19    Q14118 first&amp;second&amp;third      first=3.8;second=3.8;third=2.35 8.56</span></code></pre></div>
+<p>The resulting data frame contains protein IDs in “Accession” column and the respective Venn region in “venn_region” column. Additionally, “Sum_Coverage” and “pI” columns are included. If the value of a certain attribute for the same protein differs among the sets, all values are reported. For example, protein “P01859” has “Sum_Coverage” equal to <span class="math inline">\(13.19\)</span> in first and second fraction while “Sum_Coverage” of “P31944” differs between the fractions.</p>
+</div>
+<div id="comparison-of-multiple-data-sets" class="section level1">
+<h1 class="hasAnchor">
+<a href="#comparison-of-multiple-data-sets" class="anchor"></a>Comparison of multiple data sets</h1>
+<p>While Venn diagrams are usually used for up to three sets, the <em>eulerr</em> package allows the use of up to five sets. We define additional arbitrary set of proteins “D”.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">proteins_D</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DI57"</span>, <span class="st">"B4DPP6"</span>, <span class="st">"E5RH81"</span>, <span class="st">"P01857"</span>, <span class="st">"P02768"</span>, <span class="st">"P31944"</span>, <span class="st">"Q14118"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="fu">eulerr</span><span class="fu">::</span><span class="fu"><a href="https://jolars.github.io/eulerr/reference/euler.html">euler</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="va">proteins_A</span>, B<span class="op">=</span><span class="va">proteins_B</span>, C<span class="op">=</span><span class="va">proteins_C</span>, D<span class="op">=</span><span class="va">proteins_D</span><span class="op">)</span>, shape<span class="op">=</span><span class="st">"ellipse"</span><span class="op">)</span>, quantities<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="explore-venn_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><em>vennDataFrame</em> function doesn’t have the maximum allowed number of sets. If the “sets” parameter is unnamed list then the default set names are used: A, B, C…</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/vennDataFrame.html">vennDataFrame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">proteins_A</span>, <span class="va">proteins_B</span>, <span class="va">proteins_C</span>, <span class="va">proteins_D</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;    element venn_region</span>
+<span class="co">#&gt; 1   Q5EFE6           A</span>
+<span class="co">#&gt; 2   F6KPG5           B</span>
+<span class="co">#&gt; 3   Q6P5S8           B</span>
+<span class="co">#&gt; 4   B4DI57           D</span>
+<span class="co">#&gt; 5   Q14118           D</span>
+<span class="co">#&gt; 6   P00915         A&amp;B</span>
+<span class="co">#&gt; 7   E5RH81         A&amp;D</span>
+<span class="co">#&gt; 8   P01857         A&amp;D</span>
+<span class="co">#&gt; 9   E5RHP7         B&amp;C</span>
+<span class="co">#&gt; 10  H6VRG0         B&amp;C</span>
+<span class="co">#&gt; 11  P13646         B&amp;C</span>
+<span class="co">#&gt; 12  P31944         C&amp;D</span>
+<span class="co">#&gt; 13  B7WNR0       A&amp;B&amp;C</span>
+<span class="co">#&gt; 14  Q56G89       A&amp;B&amp;C</span>
+<span class="co">#&gt; 15  B4DPP6       A&amp;C&amp;D</span>
+<span class="co">#&gt; 16  P02768       A&amp;C&amp;D</span></code></pre></div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references">
+<div id="ref-eulerr">
+<p>Larsson, Johan. 2020. <em>eulerr: Area-Proportional Euler and Venn Diagrams with Ellipses</em>. <a href="https://cran.r-project.org/package=eulerr">https://cran.r-project.org/package=eulerr</a>.</p>
+</div>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

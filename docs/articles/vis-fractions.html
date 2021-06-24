@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visualize fractions • visProteomics</title>
+<title>Visualize and explore fractions • visProteomics</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Visualize fractions">
-<meta property="og:description" content="visProteomics">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Visualize and explore fractions">
+<meta property="og:description" content='This vignette describes how to use visProteomics functions "fracPlot" and "fracTable" to visualize and explore the proteomics data obtained with the process of fractionation.'>
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -57,7 +57,7 @@
       <a href="../articles/merge-fractions.html">Merge fractions</a>
     </li>
     <li>
-      <a href="../articles/vis-fractions.html">Visualize fractions</a>
+      <a href="../articles/vis-fractions.html">Visualize and explore fractions</a>
     </li>
     <li>
       <a href="../articles/explore-venn.html">Explore Venn diagram</a>
@@ -78,7 +78,7 @@
       </header><script src="vis-fractions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Visualize fractions</h1>
+      <h1 data-toc-skip>Visualize and explore fractions</h1>
             
       
       
@@ -88,15 +88,157 @@
 
     
     
-<p>See <a href="merge-fractions.html">vignette-1</a></p>
+<p>Fractionation of a sample is an important step of many proteomic studies. Different sample fractionation strategies use different properties of proteins to separate a complex proteomic sample into fractions prior to the mass spectrometry analysis. This step is necessary for in-depth proteomic studies where low abundant proteins of interest are being masked by highly abundant proteins <span class="citation">(Bailey et al. 2006)</span>.</p>
+<p>Here we introduce two functions which explore the results of the proteomic fractionation. Function <em>fracPlot</em> creates a protein vs. fraction scatter plot of all proteins detected in a sample (<em><a href="#plotting-the-fractionated-sample">Plotting the fractionated sample</a></em>). Additionally, different properties of detected proteins can be depicted using the color. For a tabular representation of properties of the proteins found in fractions, the function <em>fracTable</em> may be used (<em><a href="#tabular-representation-of-the-fractionated-sample">Tabular representation of the fractionated sample</a></em>). First, for functions to be visible, the package has to be loaded.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">visProteomics</span><span class="op">)</span></code></pre></div>
+<div id="data-preparation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#data-preparation" class="anchor"></a>Data preparation</h2>
+<p>To visualize or explore the results of sample fractionation, we need one tidy data frame with all proteins from all fractions listed in rows and with two required columns, one giving the protein ID and another with the number of fraction in which the protein is detected. Additional columns with further protein description can be added and used in visualization/exploration.</p>
+<p>If instead of a single data frame, a separate data frame exists for every fraction, read vignette <a href="merge-fractions.html"><em>merge-fractions</em></a>. In <em>merge-fractions</em> vignette, two data frames included in the visProteomics package are constructed. These data frames are here used to demonstrate the use of the visProteomics functions.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"data_total"</span>, package<span class="op">=</span><span class="st">"visProteomics"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"data_top20"</span>, package<span class="op">=</span><span class="st">"visProteomics"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="plotting-the-fractionated-sample" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plotting-the-fractionated-sample" class="anchor"></a>Plotting the fractionated sample</h2>
+<p>For visual representation of the proteins detected in a fractionated sample, we use the <em><a href="../reference/fracPlot.html">fracPlot</a></em> function. The plot helps to visually identify which proteins are detected in which fraction and to make a comparison among fractions. If certain property of a protein, such as isoelectric point (pI) of a protein, is used in a process of fractionation, then this should be easily observable using the <em>fracPlot</em>. Moreover, false positive protein matches can be identified as outliers if exceptable pI values of a fraction are known.</p>
+<div id="a-minimal-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#a-minimal-example" class="anchor"></a>A minimal example</h3>
+<p>For a basic usage of the <em>fracPlot</em> we only need a data frame with two columns: one with protein IDs and another with fraction number. Default names of the two columns are “Accession” and “Fraction_Numer”. To call a <em>fracPlot</em> we provide data frame (“data”), the name of a column with protein IDs (“protein_column”) and the name of a column with fraction number (“fraction_column”).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span><span class="op">)</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p>We obtain a scatter plot with fractions on x-axis and proteins on y-axis. Protein IDs are used as axis labels in alphabetical order.</p>
+</div>
+<div id="plotting-a-subset-of-proteins" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plotting-a-subset-of-proteins" class="anchor"></a>Plotting a subset of proteins</h3>
+<p>We can plot only a subset of proteins found in a data frame specifying the “list_of_proteins” parameter.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">proteins_to_plot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DI57"</span>, <span class="st">"B4DPP8"</span>, <span class="st">"Q96PD5"</span>, <span class="st">"P01857"</span>, <span class="st">"P01859"</span>, <span class="st">"false_protein"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_total</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, list_of_proteins<span class="op">=</span><span class="va">proteins_to_plot</span><span class="op">)</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>As we noticed, only proteins found in a data frame will be plotted. Proteins on a y-axis are again in alphabetical order. If instead, we want to keep the order of a “list_of_proteins”, we have to set the parameter “order_proteins” to FALSE.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">proteins_to_plot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DI57"</span>, <span class="st">"B4DPP8"</span>, <span class="st">"Q96PD5"</span>, <span class="st">"P01857"</span>, <span class="st">"P01859"</span>, <span class="st">"false_protein"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_total</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, list_of_proteins<span class="op">=</span><span class="va">proteins_to_plot</span>, order_proteins<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>If order of proteins is important, we can plot all proteins in “data” and specify their order using the “list_of_proteins”.</p>
+</div>
+<div id="changing-the-function-parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changing-the-function-parameters" class="anchor"></a>Changing the function parameters</h3>
+<p>We can customize <em>fracPlot</em> parameters to customize and improve the plot.</p>
+<p>By default, proteins are plotted in a diamond shape. This can be changes with “mark_shape” argument. Instead of a diamond shape, we can use circle setting the parameter to <span class="math inline">\(16\)</span>. All possible shapes can be checked in <em>ggplot2</em> point shapes. Default size of a marker is <span class="math inline">\(2\)</span>, but it can be adjusted with “mark_size” parameter. We can also change the names of axes with “protein_name” and “fraction_name” parameters.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, mark_shape<span class="op">=</span><span class="fl">16</span>, mark_size<span class="op">=</span><span class="fl">1</span>, protein_name<span class="op">=</span><span class="st">"Peptides"</span>, fraction_name<span class="op">=</span><span class="st">"Fractions"</span><span class="op">)</span> </code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>If instead of a default layout, we want to plot proteins on x-axis and fractions on y-axis, we have to set “fraction_position” to “y”.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, fraction_position<span class="op">=</span><span class="st">"y"</span><span class="op">)</span> </code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>The size of axis labels can also be easily adjusted. If fractions are plotted on x-axis, the default size of protein IDs is <span class="math inline">\(4\)</span>. If instead proteins are plotted on x-axis, the default size of their IDs is <span class="math inline">\(7\)</span>. The default size for fraction number is <span class="math inline">\(11\)</span> in both cases. In some cases we may want to adjust these sizes to improve the readability of labels. For example, if only small number of proteins is plotted we can increase the size of their labels.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">proteins_to_plot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"B4DI57"</span>, <span class="st">"B4DPP8"</span>, <span class="st">"Q96PD5"</span>, <span class="st">"P01857"</span>, <span class="st">"P01859"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_total</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, list_of_proteins<span class="op">=</span><span class="va">proteins_to_plot</span>, protein_labels_size<span class="op">=</span><span class="fl">10</span>, fraction_labels_size<span class="op">=</span><span class="fl">10</span>, mark_size<span class="op">=</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+</div>
+<div id="representation-of-an-additional-protein-attribute" class="section level3">
+<h3 class="hasAnchor">
+<a href="#representation-of-an-additional-protein-attribute" class="anchor"></a>Representation of an additional protein attribute</h3>
+<p>If certain protein attribute is given as a column of data frame, it can be used to color the points in a <em>fracPlot</em> scatter plot. The column is given as “color_column” parameter. The legend is automatically added to the plot and its title can be changed with “color_name” parameter.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, color_column<span class="op">=</span><span class="st">"Sum_Coverage"</span>, color_name<span class="op">=</span><span class="st">"Coverage"</span><span class="op">)</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+</div>
+<div id="using-the-functionalities-of-ggplot2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-the-functionalities-of-ggplot2" class="anchor"></a>Using the functionalities of <em>ggplot2</em>
+</h3>
+<p><em>fracPlot</em> is based on <em>ggplot2</em> <span class="citation">(Wickham 2016)</span> which allows us to use functionalities of <em>ggplot2</em> to make additional adjustements to our plot. For example, we can easily change the color scheme using the “scale_color_gradient” function from <em>ggplot2</em>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, color_column<span class="op">=</span><span class="st">"pI"</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#0000ff"</span>, high <span class="op">=</span> <span class="st">"#ff0000"</span><span class="op">)</span>
+<span class="co">#&gt; Scale for 'colour' is already present. Adding another scale for 'colour',</span>
+<span class="co">#&gt; which will replace the existing scale.</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+</div>
+<div id="saving-the-plot" class="section level3">
+<h3 class="hasAnchor">
+<a href="#saving-the-plot" class="anchor"></a>Saving the plot</h3>
+<p><em>fracPlot</em> return a <em>ggplot2</em> object. To save the plot to file, we use the <em>ggplot2</em> function “ggsave”.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fraction_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fracPlot.html">fracPlot</a></span><span class="op">(</span><span class="va">data_top20</span>, protein_column<span class="op">=</span><span class="st">"Accession"</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span><span class="op">)</span>
+<span class="va">output_filename</span> <span class="op">&lt;-</span> <span class="st">"./plots/fraction_plot.png"</span> <span class="co">#name of the plot together with the path</span>
+<span class="va">fraction_plot</span></code></pre></div>
+<p><img src="vis-fractions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="va">output_filename</span>, width<span class="op">=</span><span class="fl">14</span>, height<span class="op">=</span><span class="fl">8</span>, units<span class="op">=</span><span class="st">"in"</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="tabular-representation-of-the-fractionated-sample" class="section level2">
+<h2 class="hasAnchor">
+<a href="#tabular-representation-of-the-fractionated-sample" class="anchor"></a>Tabular representation of the fractionated sample</h2>
+<p>If there are predefined bins for a certain property of a protein, function <em><a href="../reference/fracTable.html">fracTable</a></em> counts the number of proteins inside each bin for each fraction. The resulting data frame gives numerical comparison among fractions. Sample fractionation can be done using some known protein property, such as isoelectric point (pI) of a protein. In such case, the result of <em>fracTable</em> can be used to validate the results.</p>
+<p>For example, if known bins for pI are <span class="math inline">\([5,6\rangle\)</span>, <span class="math inline">\([6,7\rangle\)</span>, <span class="math inline">\([7,8\rangle\)</span> and <span class="math inline">\([8,9]\)</span>, we define bins as a vector with all delimiters between bins including the first and the last interval ends: <span class="math inline">\(5,6,7,8,9\)</span>. For a function call, we need a data frame “data” with all proteins in rown. We also have to specify the column which holds the fraction number with “fraction_column” and the column which includes the binning values with “column_to_bin”. The vector of bin limits is an argument to “finite_bin_limits” parameter.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bin_limits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span>
+<span class="va">fraction_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fracTable.html">fracTable</a></span><span class="op">(</span><span class="va">data_top20</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, column_to_bin<span class="op">=</span><span class="st">"pI"</span>, finite_bin_limits<span class="op">=</span><span class="va">bin_limits</span><span class="op">)</span>
+<span class="va">fraction_table</span>
+<span class="co">#&gt;       Fraction_Number bin:5-6 bin:6-7 bin:7-8 bin:8-9 total min_pI max_pI</span>
+<span class="co">#&gt; 1                   1       3       4       4       2    13   5.58   8.56</span>
+<span class="co">#&gt; 2                   2       3       4       3       2    12   5.58   8.56</span>
+<span class="co">#&gt; 3                   3       3       2       0       2     7   5.73   8.56</span>
+<span class="co">#&gt; 4                   4       1       2       1       2     6   5.87   8.56</span>
+<span class="co">#&gt; 5                   5       1       6       2       1    10   5.03   8.47</span>
+<span class="co">#&gt; 6                   6       5       4       4       3    16   5.15  10.27</span>
+<span class="co">#&gt; 7                   7       4       6       7       3    20   5.15   8.19</span>
+<span class="co">#&gt; 8                   8       2      10       7       1    20   5.76   8.22</span>
+<span class="co">#&gt; 9                   9       4      10       5       1    20   5.38   8.22</span>
+<span class="co">#&gt; 10                 10       5      11       4       0    20   5.38   7.97</span>
+<span class="co">#&gt; total              NA      31      59      37      17   144     NA     NA</span></code></pre></div>
+<p>The resulting data frame has all fractions as rows and bins as columns. Additional columns report total number of proteins in fraction, minimum and maximum value of the binning property within the fraction. If there were some NA values, their number per fraction would have been reported in additional column “NA_values”. The last row sums the total number of proteins per column.</p>
+<p>In case a binning property doesn’t have a minimum value, negative infinity can be included as a lower limit of the leftmost bin setting “include_negInf” to TRUE. Similarly, we can include positive infinity with “include_Inf”.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bin_limits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span><span class="op">)</span>
+<span class="va">fraction_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fracTable.html">fracTable</a></span><span class="op">(</span><span class="va">data_top20</span>, fraction_column<span class="op">=</span><span class="st">"Fraction_Number"</span>, column_to_bin<span class="op">=</span><span class="st">"pI"</span>, finite_bin_limits<span class="op">=</span><span class="va">bin_limits</span>, include_negInf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">fraction_table</span>
+<span class="co">#&gt;       Fraction_Number bin:-Inf-6 bin:6-7 bin:7-8 total min_pI max_pI</span>
+<span class="co">#&gt; 1                   1          3       4       4    11   5.58   8.56</span>
+<span class="co">#&gt; 2                   2          3       4       3    10   5.58   8.56</span>
+<span class="co">#&gt; 3                   3          3       2       0     5   5.73   8.56</span>
+<span class="co">#&gt; 4                   4          1       2       1     4   5.87   8.56</span>
+<span class="co">#&gt; 5                   5          1       6       2     9   5.03   8.47</span>
+<span class="co">#&gt; 6                   6          5       4       4    13   5.15  10.27</span>
+<span class="co">#&gt; 7                   7          4       6       7    17   5.15   8.19</span>
+<span class="co">#&gt; 8                   8          2      10       7    19   5.76   8.22</span>
+<span class="co">#&gt; 9                   9          4      10       5    19   5.38   8.22</span>
+<span class="co">#&gt; 10                 10          5      11       4    20   5.38   7.97</span>
+<span class="co">#&gt; total              NA         31      59      37   127     NA     NA</span></code></pre></div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references">
+<div id="ref-bailey2006new">
+<p>Bailey, Jerome, Peter Mrozinski, Tocias Preckel, Christine Miller, James Martosella, and Robert Kincaid. 2006. “New Sample Fractionation Strategies for Proteomic Analyses by Lc-Ms.” <em>LC GC Magazine-North America-Solutions for Separation Scientists</em> 34: 16–23.</p>
+</div>
+<div id="ref-ggplot2">
+<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.</p>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

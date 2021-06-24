@@ -1,9 +1,9 @@
 #' Scatter plot of proteins in fractions
 #'
 #'@description Scatter plot based on a data frame. Data frame gives the list of proteins found in fractions. Points
-#'can additionally be colored by the other column of given data frame.
+#'can additionally be colored based on the values of one of the given columns.
 #'
-#'@param data Data frame with
+#'@param data Data frame with all proteins from all fractions listed in rows and with two required columns, "protein_column" and "fraction_column".
 #'@param protein_column Column used to identify the proteins. Default value is "Accession".
 #'@param fraction_column Column used to identify the fraction number. Default value is "Fraction_Number".
 #'@param color_column Column used to color the points of scatter plot. If it is missing, the plot will be in black.
@@ -18,29 +18,36 @@
 #'@param protein_name Name of axis. Default values is "Protein".
 #'@param fraction_name Name of axis. Default values is "Fraction number"
 #'@param color_name Name of color legend. By default, it is equal to "color_column"
+#'@param order_proteins Whether to preserve the given order of the proteins from the "list_of_proteins".
+#'If TRUE, proteins are ordered alphabetically based on the "protein_column".
+#'If FALSE, the order of the list is preserved. Defaults to TRUE.
 #'
 #'@returns Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-#'colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.
+#'colored based on the values of "color_column" with the color scale shown in the legend. The plot can easily be saved using "ggsave" function.
 #'
 #'
 #'@export
-fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction_Number", color_column, list_of_proteins, fraction_position="x", mark_size=2, mark_shape=18, protein_labels_size, fraction_labels_size, protein_name="Protein", fraction_name="Fraction number", color_name=color_column){
+fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction_Number", color_column, list_of_proteins, fraction_position="x", mark_size=2, mark_shape=18, protein_labels_size, fraction_labels_size, protein_name="Protein", fraction_name="Fraction number", color_name=color_column, order_proteins=TRUE){
   if(!inherits(data, "data.frame")){
     stop('"data" must be data frame')
   }
   if(any(!c(protein_column, fraction_column) %in% colnames(data))){
     stop("Wrong column names.")
   }
-  if(!missing(color_column))
+  if(!missing(color_column)){
     if(!(color_column %in% colnames(data))){
       stop('Wrong "color_column" name.')
     }
     if(!is.numeric(data[,color_column])){
       stop('"color_column" must be numeric.')
     }
+  }
   if(!fraction_position %in% c('x', 'y')){
     stop("Wrong position argument.")
   }
+
+  # protein column must be factor
+  data[,protein_column] <- as.factor(data[,protein_column])
 
   #number_of_fractions <- length(unique(data[,fraction_column]))
 
@@ -68,7 +75,13 @@ fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction
 
   # if we want to plot only some proteins
   if(!missing(list_of_proteins)){
+    if(!inherits(order_proteins, "logical")){
+      stop('"order_proteins" must be logical.')
+    }
     data <- data[data[, protein_column] %in% list_of_proteins,]
+    if(!order_proteins){
+      data[,protein_column] <- factor(data[,protein_column], levels=list_of_proteins)
+    }
   }
 
   if(missing(color_column)){
@@ -93,7 +106,7 @@ fracPlot <- function(data, protein_column="Accession", fraction_column="Fraction
   }
 
   if(fraction_position=="y"){
-    sp <- sp + ggplot2::scale_y_continuous(breaks=sort(unique(data()[,fraction_column])))
+    sp <- sp + ggplot2::scale_y_continuous(breaks=sort(unique(data[,fraction_column])))
   }else{
     sp <- sp + ggplot2::scale_x_continuous(breaks=sort(unique(data[,fraction_column])))
   }

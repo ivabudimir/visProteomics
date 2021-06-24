@@ -17,11 +17,12 @@ fracPlot(
   fraction_labels_size,
   protein_name = "Protein",
   fraction_name = "Fraction number",
-  color_name = color_column
+  color_name = color_column,
+  order_proteins = TRUE
 )
 }
 \arguments{
-\item{data}{Data frame with}
+\item{data}{Data frame with all proteins from all fractions listed in rows and with two required columns, "protein_column" and "fraction_column".}
 
 \item{protein_column}{Column used to identify the proteins. Default value is "Accession".}
 
@@ -48,12 +49,16 @@ Deafult is "x".}
 \item{fraction_name}{Name of axis. Default values is "Fraction number"}
 
 \item{color_name}{Name of color legend. By default, it is equal to "color_column"}
+
+\item{order_proteins}{Whether to preserve the given order of the proteins from the "list_of_proteins".
+If TRUE, proteins are ordered alphabetically based on the "protein_column".
+If FALSE, the order of the list is preserved. Defaults to TRUE.}
 }
 \value{
 Returns "ggplot2" object, the scatter plot in which every point represents a protein found in a fraction. Points can be
-colored by "color_column" and the color scale is shown in the legend. The plot can easily be saved using "ggsave" function.
+colored based on the values of "color_column" with the color scale shown in the legend. The plot can easily be saved using "ggsave" function.
 }
 \description{
 Scatter plot based on a data frame. Data frame gives the list of proteins found in fractions. Points
-can additionally be colored by the other column of given data frame.
+can additionally be colored based on the values of one of the given columns.
 }

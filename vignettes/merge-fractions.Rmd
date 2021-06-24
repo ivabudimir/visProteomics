@@ -2,9 +2,7 @@
 title: "Merge fractions"
 output: rmarkdown::html_vignette
 description:
-  Often when analysing the fractionated sample, we get a separate file of proteins for every fraction.
-  This vignette shows how to easily merge these files and produce the clean data frame which may be used by other functions
-  of this package.
+  Often when analysing the fractionated sample, we get a separate file of proteins for every fraction. This vignette shows how to easily merge these files and produce the clean data frame which may be used by other functions of this package.
 vignette: >
   %\VignetteIndexEntry{Merge fractions}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,16 +14,16 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>"
 )
 ```
 
-Functions from this package are intended for summarizing and visualizing fractions of the analyzed fractionated sample.
-To use the function we need one tidy data frame with all proteins from all fractions listed in rows and with two required columns, one giving the protein ID and another number of the fraction in which the protein is detected. Additional columns with further protein description can be added and used for summarization.
-In this vignette, we demonstrate how to create a tidy data frame of proteins step by step, with easily understandable R function calls. There are other, possibly more efficient approaches, however, we wanted the code to be easy to understand and customise even for R beginners.
+visProteomics functions are intended for exploration and visualization of fractions of the analyzed fractionated sample. To use the function we need one tidy data frame with all proteins from all fractions listed in rows and with two required columns, one giving the protein ID and another with the number of fraction in which the protein is detected. Additional columns with further protein description can be added and used in visualization/exploration.
+
+In this vignette, we demonstrate how to create a tidy data frame of proteins step by step, with easily understandable R function calls. There are other, possibly more efficient approaches, however, we wanted the code to be easy to understand and customize even for R beginners.
 
 ## Uploading and merging data
 
 Algorithms for protein detection usually return a separate list of detected proteins for every fraction. This means that for every fraction of the fractionated sample we have a separate file. We want to merge all these files in one tidy data frame. The easiest way is to put all files in one folder and to follow a specific pattern in naming files so that the fraction number is easily read from the file name. For demonstration, we saved all files in the folder "data-fractions" and named them as "?_Fract_proteins_visProteomics.txt", where "?" is a fraction number. In our case, all files are saved in the folder "./data-fractions/". We use the following code to create a new data frame.
 
 ```{r}
-folder_name <- "./data-fractions/" #name of folder with the saved files
+folder_name <- "./data-fractions/" #name of the folder with saved files
 file_names <- list.files(path=folder_name, pattern = "*.txt") #extracts names of all files in the folder with the given pattern
 file_names <- paste0(folder_name, file_names)
 number_of_fractions <- length(file_names) #number of fractions equals the number of files in the folder
@@ -53,7 +51,7 @@ data_total <- data_total[,c('Accession', 'Description', 'Sum_Coverage', 'Sum_Pro
 data_total[1:5,] #view the first 5 rows
 ```
 
-The column 'Sum_Coverage' should be numeric and we would want to have a bit shorter description of proteins: a first part of the string before 'OS='.
+The column 'Sum_Coverage' should be numeric. Also, we want shorter 'Description' of proteins: the first part of the string before 'OS='.
 
 ```{r}
 data_total$Sum_Coverage <- sapply(data_total$Sum_Coverage, function(x) as.numeric(gsub("%", "", x))) #convert percentage to number
@@ -61,7 +59,7 @@ data_total$Description_Trimmed <- sapply(data_total$Description, function(x) str
 data_total[1:5,c('Accession', 'Sum_Coverage', 'Description_Trimmed')] # check changed columns
 ```
 
-We may want to remove some proteins in which we are not interested in. We can do it based on their ID, their description or some other column we kept. For example, we may want to remove all proteins described as "keratin" and keep only the first 20 proteins from each fraction based on 'Sum_Peptides'.
+We may want to remove some proteins in which we are not interested. We can do it based on their ID, their description or some other column. For example, we may want to remove all proteins described as "keratin" and keep only the first 20 proteins from each fraction based on 'Sum_Peptides'.
 
 ```{r}
 data_total <- data_total[!grepl('keratin', tolower(data_total$Description)),] #remove proteins described as 'keratin' (regardless of uppercase characters)
@@ -71,7 +69,7 @@ fraction_names <- unique(data_total$Fraction_Number) #all fractions
 for(i in 1:length(fraction_names)){
   df_temp <- data_total[data_total$Fraction_Number==fraction_names[i],] #only proteins in the ith fraction
   df_temp <- df_temp[order(df_temp$Sum_Peptides, decreasing=TRUE),] #order proteins by Sum_Peptides
-  data_top20 <- rbind(data_top20, df_temp[1:min(20, nrow(df_temp)),]) #we keep the first 20 proteins
+  data_top20 <- rbind(data_top20, df_temp[1:min(20, nrow(df_temp)),]) #keep the first 20 proteins
 }
 ```
 

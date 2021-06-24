@@ -1,8 +1,11 @@
 ---
-title: "Visualize fractions"
+title: "Visualize and explore fractions"
 output: rmarkdown::html_vignette
+description:
+  This vignette describes how to use visProteomics functions "fracPlot" and "fracTable" to visualize and explore the proteomics data obtained with the process of fractionation.
+bibliography: vis-fractions.bib
 vignette: >
-  %\VignetteIndexEntry{Visualize fractions}
+  %\VignetteIndexEntry{Visualize and explore fractions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,8 +14,24 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+Fractionation of a sample is an important step of many proteomic studies.
+Different sample fractionation strategies use different
+properties of proteins to separate a complex proteomic sample into fractions prior to the mass spectrometry analysis.
+This step is necessary for in-depth proteomic studies where low abundant proteins of interest are being masked by highly abundant proteins [@bailey2006new].
 
-See [vignette-1](merge-fractions.html)
+
+Here we introduce two functions which explore the results of the proteomic fractionation. Function *fracPlot* creates a protein vs. fraction scatter plot of all proteins detected in a sample (*[Plotting the fractionated sample]*). Additionally, different properties of detected proteins can be depicted using the color. For a tabular representation of properties of the proteins found in fractions, the function *fracTable* may be used (*[Tabular representation of the fractionated sample]*). First, for functions to be visible, the package has to be loaded.
+
+```{r}
+library(visProteomics)
+```
+
+
+## Data preparation
+
+To visualize or explore the results of sample fractionation, we need one tidy data frame with all proteins from all fractions listed in rows and with two required columns, one giving the protein ID and another with the number of fraction in which the protein is detected. Additional columns with further protein description can be added and used in visualization/exploration.
+
+If instead of a single data frame, a separate data frame exists for every fraction, read vignette [*merge-fractions*](merge-fractions.html). In *merge-fractions* vignette, two data frames included in the visProteomics package are constructed. These data frames are here used to demonstrate the use of the visProteomics functions.
 
 ```{r}
 data("data_total", package="visProteomics")
@@ -20,4 +39,114 @@ data("data_top20", package="visProteomics")
 ```
 
 
+## Plotting the fractionated sample
 
+For visual representation of the proteins detected in a fractionated sample, we use the *[fracPlot](../reference/fracPlot.html)* function. The plot helps to visually identify which proteins are detected in which fraction and to make a comparison among fractions. If certain property of a protein, such as isoelectric point (pI) of a protein, is used in a process of fractionation, then this should be easily observable using the *fracPlot*. Moreover, false positive protein matches can be identified as outliers if exceptable pI values of a fraction are known.
+
+
+### A minimal example
+
+For a basic usage of the *fracPlot* we only need a data frame with two columns: one with protein IDs and another with fraction number. Default names of the two columns are "Accession" and "Fraction_Numer". To call a *fracPlot* we provide data frame ("data"), the name of a column with protein IDs ("protein_column") and the name of a column with fraction number ("fraction_column").
+
+```{r}
+fracPlot(data=data_top20, protein_column="Accession", fraction_column="Fraction_Number")
+```
+
+We obtain a scatter plot with fractions on x-axis and proteins on y-axis. Protein IDs are used as axis labels in alphabetical order.
+
+### Plotting a subset of proteins
+
+We can plot only a subset of proteins found in a data frame specifying the "list_of_proteins" parameter.
+
+```{r}
+proteins_to_plot = c("B4DI57", "B4DPP8", "Q96PD5", "P01857", "P01859", "false_protein")
+fracPlot(data_total, protein_column="Accession", fraction_column="Fraction_Number", list_of_proteins=proteins_to_plot)
+```
+
+As we noticed, only proteins found in a data frame will be plotted. Proteins on a y-axis are again in alphabetical order. If instead, we want to keep the order of a "list_of_proteins", we have to set the parameter "order_proteins" to FALSE.
+
+```{r}
+proteins_to_plot = c("B4DI57", "B4DPP8", "Q96PD5", "P01857", "P01859", "false_protein")
+fracPlot(data_total, protein_column="Accession", fraction_column="Fraction_Number", list_of_proteins=proteins_to_plot, order_proteins=FALSE)
+```
+
+If order of proteins is important, we can plot all proteins in "data" and specify their order using the "list_of_proteins".
+
+### Changing the function parameters
+
+We can customize *fracPlot* parameters to customize and improve the plot.
+
+By default, proteins are plotted in a diamond shape. This can be changes with "mark_shape" argument. Instead of a diamond shape, we can use circle setting the parameter to $16$. All possible shapes can be checked in *ggplot2* point shapes. Default size of a marker is $2$, but it can be adjusted with "mark_size" parameter. We can also change the names of axes with "protein_name" and "fraction_name" parameters.
+
+```{r}
+fracPlot(data_top20, protein_column="Accession", fraction_column="Fraction_Number", mark_shape=16, mark_size=1, protein_name="Peptides", fraction_name="Fractions") 
+```
+
+If instead of a default layout, we want to plot proteins on x-axis and fractions on y-axis, we have to set "fraction_position" to "y".
+
+```{r}
+fracPlot(data_top20, protein_column="Accession", fraction_column="Fraction_Number", fraction_position="y") 
+```
+
+The size of axis labels can also be easily adjusted. If fractions are plotted on x-axis, the default size of protein IDs is $4$. If instead proteins are plotted on x-axis, the default size of their IDs is $7$. The default size for fraction number is $11$ in both cases. In some cases we may want to adjust these sizes to improve the readability of labels. For example, if only small number of proteins is plotted we can increase the size of their labels.
+
+```{r}
+proteins_to_plot = c("B4DI57", "B4DPP8", "Q96PD5", "P01857", "P01859")
+fracPlot(data_total, protein_column="Accession", fraction_column="Fraction_Number", list_of_proteins=proteins_to_plot, protein_labels_size=10, fraction_labels_size=10, mark_size=3)
+```
+
+
+### Representation of an additional protein attribute
+
+If certain protein attribute is given as a column of data frame, it can be used to color the points in a *fracPlot* scatter plot. The column is given as "color_column" parameter. The legend is automatically added to the plot and its title can be changed with "color_name" parameter.
+
+```{r}
+fracPlot(data_top20, protein_column="Accession", fraction_column="Fraction_Number", color_column="Sum_Coverage", color_name="Coverage")
+```
+
+### Using the functionalities of *ggplot2*
+
+*fracPlot* is based on *ggplot2* [@ggplot2] which allows us to use functionalities of *ggplot2* to make additional adjustements to our plot. For example, we can easily change the color scheme using the "scale_color_gradient" function from *ggplot2*.
+
+```{r}
+fracPlot(data_top20, protein_column="Accession", fraction_column="Fraction_Number", color_column="pI") + 
+  ggplot2::scale_color_gradient(low = "#0000ff", high = "#ff0000")
+```
+
+
+### Saving the plot
+
+*fracPlot* return a *ggplot2* object. To save the plot to file, we use the *ggplot2* function "ggsave".
+
+```{r}
+fraction_plot <- fracPlot(data_top20, protein_column="Accession", fraction_column="Fraction_Number")
+output_filename <- "./plots/fraction_plot.png" #name of the plot together with the path
+fraction_plot
+ggplot2::ggsave(output_filename, width=14, height=8, units="in")
+```
+
+
+## Tabular representation of the fractionated sample
+
+If there are predefined bins for a certain property of a protein, function *[fracTable](../reference/fracTable.html)* counts the number of proteins inside each bin for each fraction. The resulting data frame gives numerical comparison among fractions.
+Sample fractionation can be done using some known protein property, such as isoelectric point (pI) of a protein. In such case, the result of *fracTable* can be used to validate the results.
+
+For example, if known bins for pI are $[5,6\rangle$, $[6,7\rangle$, $[7,8\rangle$ and $[8,9]$, we define bins as a vector with all delimiters between bins including the first and the last interval ends: $5,6,7,8,9$. For a function call, we need a data frame "data" with all proteins in rown. We also have to specify the column which holds the fraction number with "fraction_column" and the column which includes the binning values with "column_to_bin". The vector of bin limits is an argument to "finite_bin_limits" parameter.
+
+```{r}
+bin_limits <- c(5,6,7,8,9)
+fraction_table <- fracTable(data_top20, fraction_column="Fraction_Number", column_to_bin="pI", finite_bin_limits=bin_limits)
+fraction_table
+```
+
+The resulting data frame has all fractions as rows and bins as columns. Additional columns report total number of proteins in fraction, minimum and maximum value of the binning property within the fraction. If there were some NA values, their number per fraction would have been reported in additional column "NA_values". The last row sums the total number of proteins per column.
+
+In case a binning property doesn't have a minimum value, negative infinity can be included as a lower limit of the leftmost bin setting "include_negInf" to TRUE. Similarly, we can include positive infinity with "include_Inf".
+
+```{r}
+bin_limits <- c(6,7,8)
+fraction_table <- fracTable(data_top20, fraction_column="Fraction_Number", column_to_bin="pI", finite_bin_limits=bin_limits, include_negInf=TRUE)
+fraction_table
+```
+
+## References
