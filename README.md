@@ -12,9 +12,9 @@ graphical and tabular representation.
 
 Venn/Euler diagrams are widely used for data summarization and there are
 many plotting tools available. **visProteomics** defines a complementary
-tabular function. Resulting data frame summarizes attributes of elements
-found in different regions of Venn diagram. This generic function can be
-used for any data set.
+tabular function. The resulting data frame summarizes attributes of
+elements found in different regions of the Venn diagram. This generic
+function can be used for any data set.
 
 ## Installation
 
@@ -31,7 +31,7 @@ Please check
 [visProteomics](https://ivabudimir.github.io/visProteomics/) website.
 
 Alternatively, read vignettes *merge-fractions* and *vis-fractions* for
-the exploration and visualization of a fractionated proteomic sample.
+the exploration and visualization of a fractionated proteomics sample.
 For the tabular Venn function, read *explore-venn* vignette.
 
 ## License

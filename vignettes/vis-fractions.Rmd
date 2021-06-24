@@ -14,13 +14,13 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-Fractionation of a sample is an important step of many proteomic studies.
+Fractionation of a sample is an important step of many proteomics studies.
 Different sample fractionation strategies use different
-properties of proteins to separate a complex proteomic sample into fractions prior to the mass spectrometry analysis.
-This step is necessary for in-depth proteomic studies where low abundant proteins of interest are being masked by highly abundant proteins [@bailey2006new].
+properties of proteins to separate a complex proteomics sample into fractions prior to the mass spectrometry analysis.
+This step is necessary for in-depth proteomics studies where low abundant proteins of interest are being masked by highly abundant proteins [@bailey2006new].
 
 
-Here we introduce two functions which explore the results of the proteomic fractionation. Function *fracPlot* creates a protein vs. fraction scatter plot of all proteins detected in a sample (*[Plotting the fractionated sample]*). Additionally, different properties of detected proteins can be depicted using the color. For a tabular representation of properties of the proteins found in fractions, the function *fracTable* may be used (*[Tabular representation of the fractionated sample]*). First, for functions to be visible, the package has to be loaded.
+Here we introduce two functions that explore the results of proteomics fractionation. Function *fracPlot* creates a protein vs. fraction scatter plot of all proteins detected in a sample (*[Plotting the fractionated sample]*). Additionally, different properties of detected proteins can be depicted using the color. For a tabular representation of properties of the proteins found in fractions, the function *fracTable* may be used (*[Tabular representation of the fractionated sample]*). First, for functions to be visible, the package has to be loaded.
 
 ```{r}
 library(visProteomics)
@@ -128,7 +128,7 @@ ggplot2::ggsave(output_filename, width=14, height=8, units="in")
 
 ## Tabular representation of the fractionated sample
 
-If there are predefined bins for a certain property of a protein, function *[fracTable](../reference/fracTable.html)* counts the number of proteins inside each bin for each fraction. The resulting data frame gives numerical comparison among fractions.
+If there are predefined bins for certain property of a protein, function *[fracTable](../reference/fracTable.html)* counts the number of proteins inside each bin for each fraction. The resulting data frame gives numerical comparison among fractions.
 Sample fractionation can be done using some known protein property, such as isoelectric point (pI) of a protein. In such case, the result of *fracTable* can be used to validate the results.
 
 For example, if known bins for pI are $[5,6\rangle$, $[6,7\rangle$, $[7,8\rangle$ and $[8,9]$, we define bins as a vector with all delimiters between bins including the first and the last interval ends: $5,6,7,8,9$. For a function call, we need a data frame "data" with all proteins in rown. We also have to specify the column which holds the fraction number with "fraction_column" and the column which includes the binning values with "column_to_bin". The vector of bin limits is an argument to "finite_bin_limits" parameter.

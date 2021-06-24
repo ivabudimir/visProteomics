@@ -12,9 +12,9 @@ graphical and tabular representation.
 
 Venn/Euler diagrams are widely used for data summarization and there are
 many plotting tools available. **visProteomics** defines a complementary
-tabular function. Resulting data frame summarizes attributes of elements
-found in different regions of Venn diagram. This generic function can be
-used for any data set.
+tabular function. The resulting data frame summarizes attributes of
+elements found in different regions of the Venn diagram. This generic
+function can be used for any data set.
 
 ## Installation
 

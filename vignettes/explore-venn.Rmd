@@ -1,6 +1,8 @@
 ---
 title: "Explore Venn diagram"
 output: rmarkdown::html_vignette
+description:
+  This vignette describes how to use visProteomics function "vennDataFrame" to summarize attributes of elements found in different regions of the Venn diagram.
 bibliography: explore-venn.bib
 vignette: >
   %\VignetteIndexEntry{Explore Venn diagram}
