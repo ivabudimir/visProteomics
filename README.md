@@ -16,6 +16,8 @@ tabular function. The resulting data frame summarizes attributes of
 elements found in different regions of the Venn diagram. This generic
 function can be used for any data set.
 
+## visProteomics package as part of proteomics analysis
+
 ![visProteomics_illustration](https://user-images.githubusercontent.com/37818185/124632049-459e8c80-de84-11eb-814e-9f80fdb10245.png)
 
 ## Installation
