@@ -1,5 +1,5 @@
 Package: visProteomics
-Title: Visualisation of proteomics data sets
+Title: Exploration and visualization of proteomics data
 Version: 0.1
 Authors@R: c(person("Iva", "Budimir", email = "iva.budimir.os@gmail.com", role = c("aut", "cre")),
            person("Frania Zu\u00F1iga", "Ba\u00F1uelos" ,email = "zuniga@mpi-magdeburg.mpg.de", role="dtc"),
